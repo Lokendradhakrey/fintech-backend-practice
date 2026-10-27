@@ -1,0 +1,30 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: development
+      REDIS_URL: redis://redis:6380
+    ports:
+      - "127.0.0.1:6500:6500"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      - "127.0.0.1:6380:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
