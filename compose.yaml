@@ -1,5 +1,5 @@
 services:
-  api:
+  fintech-practice-api:
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -8,16 +8,16 @@ services:
       - .env
     environment:
       NODE_ENV: development
-      REDIS_URL: redis://redis:6380
+      REDIS_URL: redis://fintech-practice-redis:6379
     ports:
       - "127.0.0.1:6500:6500"
     volumes:
       - .:/app
       - /app/node_modules
     depends_on:
-      - redis
+      - fintech-practice-redis
 
-  redis:
+  fintech-practice-redis:
     image: redis:7
     restart: unless-stopped
     command: redis-server --appendonly yes
