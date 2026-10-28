@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import { errorHandler } from "./middleware/error.middleware.js";
+import { commonRoutes } from "./index.route.js";
 
 export const app = express();
 
@@ -13,3 +14,5 @@ app.use(errorHandler);
 app.get("/", (_req, res) => {
   res.send("Backend is working.....");
 });
+
+commonRoutes(app);

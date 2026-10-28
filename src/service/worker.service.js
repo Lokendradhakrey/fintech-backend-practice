@@ -15,10 +15,10 @@ const emailWorker = new Worker(
 );
 
 
-emailWorker.on("completed", (job)=>{
+emailWorker.on("completed", (_job)=>{
     console.log("Job completed")
 })
 
-emailWorker.on("failed", (job, error)=>{
+emailWorker.on("failed", (_job, error)=>{
     console.log("Job failed..", error)
 })

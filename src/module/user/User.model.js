@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import { ROLES } from "../../constant/enum";
+import { ROLES } from "../../constant/enum.js";
+import { boolean } from "zod";
 
 const userSchema = new mongoose.Schema(
   {
@@ -37,18 +38,24 @@ const userSchema = new mongoose.Schema(
 
     password: {
       type: String,
-      required: [true, "Password is required"],
-      minlength: [8, "Password must contain at least 8 characters"],
-      maxlength: [128, "Password cannot exceed 128 characters"],
-      match: [
-        /^[A-Z](?=.*\d)(?=.*[^A-Za-z0-9\s])\S*$/,
-        "Password must start with a capital letter and contain a number and special character",
-      ],
+      required: true,
       select: false,
     },
+
     role: {
       type: String,
       enum: ROLES,
+      default: "USER",
+    },
+
+    isOtpVarified: {
+      type: boolean,
+      default: false,
+    },
+
+    isDeleted: {
+      type: boolean,
+      default: false,
     },
   },
   {
