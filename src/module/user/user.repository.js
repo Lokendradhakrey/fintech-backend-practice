@@ -1,7 +1,7 @@
 import User from "./User.model.js";
 
 export const createUser = async (data) => {
-  return User.create({
+  return await User.create({
     fullName: data.fullName,
     email: data.email,
     phone: data.phone,
@@ -10,31 +10,39 @@ export const createUser = async (data) => {
 };
 
 export const findById = async (id) => {
-  return User.findById(id);
+  return await User.findById(id);
 };
 
-export const findByEmail = async (email) => {
-  return User.findOne({ email });
+export const findByEmail = async (email, projection = "") => {
+  return await User.findOne({ email }).select(projection);
 };
 
-export const findByPhone = async (phone) => {
-  return User.findOne({ phone });
+export const findByPhone = async (phone, projection = "") => {
+  return await User.findOne({ phone }).select(projection);
 };
 
 export const updateUser = async (id, data) => {
-  return User.findByIdAndUpdate(id, {
-    fullName: data.fullName,
-    email: data.email,
-    phone: data.phone,
-  });
+  return await User.findByIdAndUpdate(
+    id,
+    {
+      fullName: data.fullName,
+      email: data.email,
+      phone: data.phone,
+    },
+    { new: true, runValidators: true },
+  );
 };
 
 export const deleteUser = async (id, data) => {
-  return User.findByIdAndUpdate(id, {
-    isDeleted: true,
-  });
+  return await User.findByIdAndUpdate(
+    id,
+    {
+      isDeleted: true,
+    },
+    { new: true },
+  );
 };
 
 export const deleteUserPermanantly = async (id) => {
-  return User.deleteOne(id);
+  return await User.deleteOne(id);
 };

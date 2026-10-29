@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema(
       default: "USER",
     },
 
-    isOtpVarified: {
+    isOtpVerified: {
       type: boolean,
       default: false,
     },
